@@ -10,7 +10,10 @@ type Base struct {
 }
 
 func Ignite() *Base {
-	return &Base{Engine: gin.New()}
+	g := &Base{Engine: gin.New()}
+	g.Use(ErrorHandler())
+	// return &Base{Engine: gin.New()}
+	return g
 }
 
 func (b *Base) Launch() {
@@ -30,8 +33,11 @@ func (b *Base) Attach(f Fairing) *Base {
 	return b
 }
 
-func (b *Base) Handle(httpMethod, relativePath string, handlers ...gin.HandlerFunc) *Base {
-	b.g.Handle(httpMethod, relativePath, handlers...)
+func (b *Base) Handle(httpMethod, relativePath string, handlers interface{}) *Base {
+	// b.g.Handle(httpMethod, relativePath, handlers...)
+	if h := Convert(handlers); h != nil {
+		b.g.Handle(httpMethod, relativePath, h)
+	}
 	return b
 }
 
