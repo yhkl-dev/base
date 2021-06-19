@@ -7,8 +7,9 @@ import (
 )
 
 func main() {
-	base.Ignite().Attach(middlewares.NewUserMid()).
+	base.Ignite().
+		Beans(base.NewGormAdapter()).
+		Attach(middlewares.NewUserMid()).
 		Mount("v1", classes.NewUserClass(), classes.NewIndexClass()).
-		Mount("v2", classes.NewIndexClass()).
 		Launch()
 }

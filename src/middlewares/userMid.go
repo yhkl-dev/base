@@ -1,8 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +12,7 @@ func NewUserMid() *UserMid {
 }
 
 func (s *UserMid) OnRequest(context *gin.Context) error {
-	fmt.Println("new middleware")
-	fmt.Println(context.Query("name"))
+	// fmt.Println("new middleware")
+	// fmt.Println(context.Query("name"))
 	return nil
 }
